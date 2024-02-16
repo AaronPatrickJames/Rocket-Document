@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rocket Document", "Rocket Document\Rocket Document.csproj", "{2397199A-1EEB-4B6E-B85F-532C7291598A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket Document", "Rocket Document\Rocket Document.csproj", "{2397199A-1EEB-4B6E-B85F-532C7291598A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Rocket Document Unit Tests", "..\Rocket Document Unit Tests\Rocket Document Unit Tests.csproj", "{58262989-6660-4FB9-8C71-93F627A786B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2397199A-1EEB-4B6E-B85F-532C7291598A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2397199A-1EEB-4B6E-B85F-532C7291598A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2397199A-1EEB-4B6E-B85F-532C7291598A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58262989-6660-4FB9-8C71-93F627A786B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58262989-6660-4FB9-8C71-93F627A786B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58262989-6660-4FB9-8C71-93F627A786B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58262989-6660-4FB9-8C71-93F627A786B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
