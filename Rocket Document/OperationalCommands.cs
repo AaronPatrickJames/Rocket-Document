@@ -77,5 +77,36 @@ public class MongoCommandExector
         Debug.WriteLine(results);
     }
 
+
+    /*
+   ___   ___   _   _   ___      _   _   ___   ___   ___   ___ 
+  / __| | _ \ | | | | |   \    | | | | / __| | __| | _ \ / __|
+ | (__  |   / | |_| | | |) |   | |_| | \__ \ | _|  |   / \__ \
+  \___| |_|_\  \___/  |___/     \___/  |___/ |___| |_|_\ |___/
+      */                                                       
+    public void createUser(string usernamme)
+    {
+
+    }
+
+    public void readOneUser(string usernamme)
+    {
+
+    }
+    public void readAllUsers(string usernamme)
+    {
+
+    }
+
+    public void updateUser(string usernamme)
+    {
+
+    }
+    public void deleteUser(string usernamme)
+    {
+
+    }
+
+
 }
 
