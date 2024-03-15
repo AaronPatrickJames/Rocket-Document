@@ -84,9 +84,14 @@ public class MongoCommandExector
  | (__  |   / | |_| | | |) |   | |_| | \__ \ | _|  |   / \__ \
   \___| |_|_\  \___/  |___/     \___/  |___/ |___| |_|_\ |___/
       */                                                       
-    public void createUser(string usernamme)
+    public void createUser(BsonDocument UserDocument)
     {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Users");
 
+        col.InsertOne(UserDocument);
     }
 
     public void readOneUser(string usernamme)
