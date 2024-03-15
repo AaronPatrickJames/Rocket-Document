@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace RocketDoc
 {
-    internal class GetTime
+    public class GetTime
     {
+        private static DateTime CurrentTime; //= "FDQfRbV33E8GxJIl"; //Remove Default
+        public static DateTime currenttime
+        {
+            get { return GetNetworkTime(); }
+        }
+
         public static DateTime GetNetworkTime()
         {
             //default Windows time server
