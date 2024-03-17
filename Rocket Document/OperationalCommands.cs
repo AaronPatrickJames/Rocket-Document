@@ -94,23 +94,79 @@ public class MongoCommandExector
         col.InsertOne(UserDocument);
     }
 
-    public void readOneUser(string usernamme)
+    public BsonDocument readOneUser(string userID)
     {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Users");
 
+        var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(userID));
+
+        var user = col.Find(filter).FirstOrDefault().ToBsonDocument();
+
+        return user;
     }
-    public void readAllUsers(string usernamme)
+    public List<BsonDocument> readAllUsers()
     {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Users");
 
+        var users = col.Find(new BsonDocument()).ToList();
+
+        return users;
     }
 
-    public void updateUser(string usernamme)
+    public void updateUser(string userID, BsonDocument userBsonDocument)
     {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Users");
 
+        var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(userID));
+
+        foreach (var keyvalue in  userBsonDocument)
+        {
+            var update = Builders<BsonDocument>.Update.Set(keyvalue.Name.ToString(), keyvalue.Value);
+            col.UpdateOne(filter, update);
+        }
     }
-    public void deleteUser(string usernamme)
+    //Reactiveate User
+    public void reactiveate(string userID) //Does not truely delete user - Marks User as Inactive and Hides from displaying when users are called back) 
     {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Users");
+        var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(userID));
 
+        var update = Builders<BsonDocument>.Update.Set("Active_User", true);
+        col.UpdateOne(filter, update);
     }
+
+    //Delete and Deactive User
+    public void deactiveate(string userID) //Does not truely delete user - Marks User as Inactive and Hides from displaying when users are called back) 
+    {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Users");
+        var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(userID));
+
+        var update = Builders<BsonDocument>.Update.Set("Active_User", false);
+        col.UpdateOne(filter, update);
+    }
+
+    /*
+   ___   ___   _   _   ___       ___   ___    ___    _   _   ___   ___ 
+  / __| | _ \ | | | | |   \     / __| | _ \  / _ \  | | | | | _ \ / __|
+ | (__  |   / | |_| | | |) |   | (_ | |   / | (_) | | |_| | |  _/ \__ \
+  \___| |_|_\  \___/  |___/     \___| |_|_\  \___/   \___/  |_|   |___/                                                                
+    */
+
 
 
 }

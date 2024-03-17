@@ -19,6 +19,8 @@ public class MongoDatabaseConnection
 	//Public Facing Calls
     public MongoClient MongoConnect()
 	{
+        //LocalHost Defualt Connection
+        //string connectionString = "mongodb://localhost:27017";
 
         //Create Connection String
         string connectionString = MongoPrefix + "://" + MongoUserName + ":" + MongoPassword + "@" + MongoCluster + "." + MongoAppend;
