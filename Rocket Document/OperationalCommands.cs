@@ -74,7 +74,7 @@ public class MongoCommandExector
         var deleteFilter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(cabinetID));
 
         var results = col.DeleteOne(deleteFilter);
-        Debug.WriteLine(results);
+        
     }
 
 
@@ -166,7 +166,65 @@ public class MongoCommandExector
  | (__  |   / | |_| | | |) |   | (_ | |   / | (_) | | |_| | |  _/ \__ \
   \___| |_|_\  \___/  |___/     \___| |_|_\  \___/   \___/  |_|   |___/                                                                
     */
+    public void createGroup(BsonDocument GroupDocument)
+    {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Groups");
 
+        col.InsertOne(GroupDocument);
+    }
+    public BsonDocument readOneGroup(string groupID)
+    {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Groups");
+
+        var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(groupID));
+
+        var group = col.Find(filter).FirstOrDefault().ToBsonDocument();
+
+        return group;
+    }
+    public List<BsonDocument> readAllGroups()
+    {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Groups");
+
+        var groups = col.Find(new BsonDocument()).ToList();
+
+        return groups;
+    }
+    public void updateGroup(string groupID, BsonDocument GroupDocument)
+    {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Groups");
+
+        var filter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(groupID));
+
+        foreach (var keyvalue in GroupDocument)
+        {
+            var update = Builders<BsonDocument>.Update.Set(keyvalue.Name.ToString(), keyvalue.Value);
+            col.UpdateOne(filter, update);
+        }
+    }
+    public void deleteGroup(string groupID)
+    {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var col = db.GetCollection<BsonDocument>("Groups");
+        var deleteFilter = Builders<BsonDocument>.Filter.Eq("_id", ObjectId.Parse(groupID));
+
+        var results = col.DeleteOne(deleteFilter);
+
+    }
 
 
 }
