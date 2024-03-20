@@ -1,7 +1,10 @@
-﻿using MongoDB.Bson;
+﻿using Amazon.Auth.AccessControlPolicy;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.GridFS;
 using System;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 public class MongoCommandExector
 {
@@ -225,6 +228,31 @@ public class MongoCommandExector
         var results = col.DeleteOne(deleteFilter);
 
     }
+
+
+    /*
+   ___   ___   _   _   ___      ___     ___     ___   _   _   __  __   ___   _  _   _____   ___ 
+  / __| | _ \ | | | | |   \    |   \   / _ \   / __| | | | | |  \/  | | __| | \| | |_   _| / __|
+ | (__  |   / | |_| | | |) |   | |) | | (_) | | (__  | |_| | | |\/| | | _|  | .` |   | |   \__ \
+  \___| |_|_\  \___/  |___/    |___/   \___/   \___|  \___/  |_|  |_| |___| |_|\_|   |_|   |___/                                                                                                     
+    */
+
+    public ObjectId createDocument(byte[] document, string documentName, BsonDocument metadata)
+    {
+        var connection = new MongoDatabaseConnection();
+        var client = connection.MongoConnect();
+        var db = client.GetDatabase("Rocket_Document");
+        var bucket = connection.bucketTable("Repair Orders");
+        var options = new GridFSUploadOptions
+        {
+            ChunkSizeBytes = 1048576, // 1MB
+            Metadata = metadata
+        };
+
+        var id = bucket.UploadFromBytes(documentName, document, options);
+        return id;
+    }
+
 
 
 }

@@ -6,6 +6,7 @@ using MongoDB;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Operations;
+using MongoDB.Driver.GridFS;
 
 public class MongoDatabaseConnection
 {
@@ -74,14 +75,22 @@ public class MongoDatabaseConnection
         return queryReturn;
     }
 
-    //Create New Database
-    public void createDB(string DatabaseName)
+    //GridFS base items
+    public GridFSBucket bucketTable(string bucketName)
     {
         var client = MongoConnect();
-        var returnedResult = client.GetDatabase("Test");
-        Debug.WriteLine(returnedResult.ToString());
-    }
+        var database = client.GetDatabase("Rocket_Document");
 
+        var bucket = new GridFSBucket(database, new GridFSBucketOptions
+        {
+            BucketName = bucketName,
+            ChunkSizeBytes = 1048576, // 1MB
+            WriteConcern = WriteConcern.WMajority,
+            ReadPreference = ReadPreference.Secondary
+        });
+
+        return bucket;
+    }
 
 
 
